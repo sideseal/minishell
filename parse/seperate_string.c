@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:38:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/24 21:16:29 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/02/25 14:05:45 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*read_string_before_white_quote(char *str, t_list **root)
 	index = 0;
 	while (str[index] && !is_meta(str[index]))
 		index++;
+	printf("index: %d\n", index);
 	return_val = ft_substr(str, 0, index);
 	ft_lstadd_back(root, ft_lstnew(return_val, 0));
 	return (str + index);
@@ -48,8 +49,12 @@ int	handle_first_pipe(t_list **root, int *status)
 t_list	*seperate_string(char *str, int *status)
 {
 	t_list	*root;
+	char	*start;
 
-	root = ft_lstnew(ft_strdup("root node start"), 0);
+	// fixed 1
+	start = ft_strdup("root node start");
+	root = ft_lstnew(start, 0);
+	free(start);
 	while (*str && ft_iswhite(*str))
 		str++;
 	while (*str)

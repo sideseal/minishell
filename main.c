@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/02/24 22:23:42 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/02/25 14:18:00 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	handle_child_process(t_env *environ, int *status)
 	// 	temp = temp->next;
 	// }
 
-	*status = execute(line_root, environ);
+//	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(line_root);
 }
@@ -125,6 +125,11 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*environ;
 	int		status;
 
+	if (argc > 1 || argv[1] != NULL)
+	{
+		ft_putstr_fd("Usage: ./minishell\n", 2);
+		return (1);
+	}
 	status = 0;
 	environ = set_environ(envp);
 	while (1)
