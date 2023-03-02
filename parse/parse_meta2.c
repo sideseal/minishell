@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 07:31:30 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/23 09:33:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/02 14:57:27 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ int	double_quote_task(char *return_val, t_list **root, int *status)
 		if (return_val[index] == '$')
 		{
 			if (process_dollar(return_val, &index, root, status))
+			{
+				free(temp);
 				return (1);
+			}
 		}
 		else
 			process_plain_text(return_val, &index, root);
 	}
+	free(temp);
 	return (0);
 }

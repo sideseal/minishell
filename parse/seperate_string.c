@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:38:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/24 21:16:29 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 15:01:21 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,17 @@ t_list	*seperate_string(char *str, int *status)
 		else
 			str = read_string_before_white_quote(str, &root);
 		if (!str)
+		{
+			free(root->content);
+			free(root);
 			return (0);
+		}
 	}
 	if (handle_first_pipe(&root, status))
+	{
+		free(root->content);
+		free(root);
 		return (0);
+	}
 	return (root);
 }

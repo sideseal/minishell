@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 07:35:29 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/24 21:51:39 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 14:36:48 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_list	*merge_string(t_list **root)
 {
 	t_list	*temp;
 	t_list	*return_val;
-	t_list	*temp2;
 	char	*tmp;
 
 	return_val = ft_lstnew(ft_strdup("merge node start"), 0);

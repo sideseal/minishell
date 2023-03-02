@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 07:28:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/24 22:23:24 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 14:47:55 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*read_string_before_quote(char *str, t_list **root, int *status)
 {
 	char	*return_val;
 	char	trg;
+	int		len;
 
 	trg = *str;
 	str++;
@@ -53,7 +54,9 @@ char	*read_string_before_quote(char *str, t_list **root, int *status)
 		ft_lstadd_back(root, ft_lstnew(return_val, 0));
 		ft_lstlast(*root)->is_single_quote = 1;
 	}
-	return (str + ft_strlen(return_val) + 1);
+	len = ft_strlen(return_val);
+	free(return_val);
+	return (str + len + 1);
 }
 
 char	*read_string_while_white(char *str, t_list **root)
