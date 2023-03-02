@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/02 16:14:50 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 20:02:26 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	handle_child_process(t_env *environ, int *status)
 		free_parsed_data(&line_root);
 		return ;
 	}
+//	printf("root cmd: %s\n", line_root->cmd);
+//	printf("next cmd: %s\n", line_root->next->cmd);
 	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(&line_root);

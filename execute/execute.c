@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/24 18:31:07 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 20:36:37 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ int	pipeline(t_cmd *line, t_env *environ)
 		execute_error("failed to fork", CHILD);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+//		signal(SIGINT, SIG_DFL);
+//		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		if (cur->fd_in != -2)
 			ft_dup2(cur->fd_in, STDIN_FILENO, CHILD);
 		if (cur->fd_out != -2)
@@ -119,14 +121,20 @@ int	pipeline(t_cmd *line, t_env *environ)
 	return (child_signal(status));
 }
 
+void	execute_signal_handler(int signum)
+{
+	if (signum == SIGINT || signum == SIGQUIT)
+		write(1, "\n", 1);
+}
+
 int	execute(t_cmd *line, t_env *environ)
 {
 	pid_t	pid;
 	int		ret;
 	int		status;
 
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, execute_signal_handler);
+	signal(SIGQUIT, execute_signal_handler);
 	if (line->next == NULL)
 	{
 		set_simple_command_fd(line, PARENT);
@@ -134,11 +142,13 @@ int	execute(t_cmd *line, t_env *environ)
 		reset_simple_command_fd(line, PARENT);
 		return (ret);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		execute_error("failed to fork", PARENT);
 	if (pid == 0)
 		exit(pipeline(line, environ));
-	ft_wait(&status, PARENT);
+	ft_waitpid(pid, &status, 0, PARENT);
 	return (child_signal(status));
 }

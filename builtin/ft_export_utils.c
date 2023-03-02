@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:29:55 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/23 17:39:47 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 19:04:10 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	check_export_type(char *cmd)
 	i = 0;
 	while (cmd[i] != '\0')
 	{
+		if (i == 0 && ('0' <= cmd[i] && cmd[i] <= '9'))
+			return (0);
 		if (is_meta_builtin(cmd[i]))
 		{
 			if (cmd[i] == '=')

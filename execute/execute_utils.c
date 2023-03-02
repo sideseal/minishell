@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:23:08 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/24 18:10:30 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/02 18:44:12 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*find_path(char *command, char **envp)
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (envp[i] == NULL)
-		return (NULL);
+		no_such_file_or_directory(command + 1);
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	find = NULL;
