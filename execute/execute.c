@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/02 20:36:37 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/03 23:12:31 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	pipeline_child(t_cmd *node, t_env *environ)
 		execute_error("failed to fork", CHILD);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		if (node->fd_in != -2)
 			ft_dup2(node->fd_in, STDIN_FILENO, CHILD);
 		ft_close(pfd[READ_END], CHILD);
@@ -85,9 +83,25 @@ void	pipeline_child(t_cmd *node, t_env *environ)
 			ft_dup2(node->fd_out, STDOUT_FILENO, CHILD);
 		exit(execute_command_by_type(node, environ, CHILD));
 	}
-	ft_waitpid(pid, NULL, WNOHANG, CHILD);
 	ft_close(pfd[WRITE_END], CHILD);
 	ft_dup2(pfd[READ_END], STDIN_FILENO, CHILD);
+}
+
+int	retrieve_childs(t_cmd *line, pid_t pid, int *statloc, int process_type)
+{
+	t_cmd	*cur;
+	pid_t	retrived;
+	int		pid_statloc;
+
+	cur = line;
+	while (cur != NULL)
+	{
+		retrived = ft_wait(statloc, process_type);
+		if (retrived == pid)
+			pid_statloc = *statloc;
+		cur = cur->next;
+	}
+	return (pid_statloc);
 }
 
 int	pipeline(t_cmd *line, t_env *environ)
@@ -107,24 +121,15 @@ int	pipeline(t_cmd *line, t_env *environ)
 		execute_error("failed to fork", CHILD);
 	else if (pid == 0)
 	{
-//		signal(SIGINT, SIG_DFL);
-//		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
-		if (cur->fd_in != -2)
-			ft_dup2(cur->fd_in, STDIN_FILENO, CHILD);
-		if (cur->fd_out != -2)
-			ft_dup2(cur->fd_out, STDOUT_FILENO, CHILD);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		set_command_fd(cur);
 		exit(execute_command_by_type(cur, environ, CHILD));
 	}
-	ft_waitpid(pid, &status, 0, CHILD);
+	// 확인해야 함! 시그널 처리도...
+	ft_close(STDIN_FILENO, CHILD);
+	status = retrieve_childs(line, pid, &status, CHILD);
 	return (child_signal(status));
-}
-
-void	execute_signal_handler(int signum)
-{
-	if (signum == SIGINT || signum == SIGQUIT)
-		write(1, "\n", 1);
 }
 
 int	execute(t_cmd *line, t_env *environ)
@@ -133,10 +138,10 @@ int	execute(t_cmd *line, t_env *environ)
 	int		ret;
 	int		status;
 
-	signal(SIGINT, execute_signal_handler);
-	signal(SIGQUIT, execute_signal_handler);
 	if (line->next == NULL)
 	{
+		signal(SIGINT, execute_signal_handler);
+		signal(SIGQUIT, execute_signal_handler);
 		set_simple_command_fd(line, PARENT);
 		ret = execute_command_by_type(line, environ, PARENT);
 		reset_simple_command_fd(line, PARENT);
@@ -149,6 +154,6 @@ int	execute(t_cmd *line, t_env *environ)
 		execute_error("failed to fork", PARENT);
 	if (pid == 0)
 		exit(pipeline(line, environ));
-	ft_waitpid(pid, &status, 0, PARENT);
+	ft_wait(&status, PARENT);
 	return (child_signal(status));
 }

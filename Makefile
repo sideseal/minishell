@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 13:03:12 by seokjyoo          #+#    #+#              #
-#    Updated: 2023/02/23 19:35:03 by gychoi           ###   ########.fr        #
+#    Updated: 2023/03/03 19:06:03 by gychoi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC = ./main.c \
 	./execute/execute_utils.c \
 	./execute/fd_utils.c \
 	./execute/ft_functions.c \
+	./execute/signal_utils.c \
 	./environ/environ.c \
 	./environ/environ_utils.c \
 	./builtin/ft_echo.c \

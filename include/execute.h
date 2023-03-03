@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:19:23 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/24 18:06:34 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/03 19:21:35 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	permission_denied(char *command);
 
 char	*find_path(char *command, char **envp);
 int		execute_command(t_cmd *node, char **envp);
-int		retrieve_childs(t_cmd *line, pid_t pid, int *statloc, int process_type);
 int		child_signal(int pid_status);
+void	execute_signal_handler(int signum);
 int		execute(t_cmd *commandline, t_env *environ);
 
 void	set_simple_command_fd(t_cmd *node, int process_type);
