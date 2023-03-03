@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:38:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/02 16:07:31 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/03 16:54:33 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,16 @@ int	handle_first_pipe(t_list **root, int *status)
 t_list	*seperate_string(char *str, int *status)
 {
 	t_list	*root;
-	char	*tmp;
 
 	root = ft_lstnew(ft_strdup("root node start"), 0);
 	while (*str && ft_iswhite(*str))
 		str++;
 	while (*str)
 	{
-		tmp = ft_strdup(str);
-		if (is_meta(*tmp))
-			str = parse_meta(tmp, &root, status);
+		if (is_meta(*str))
+			str = parse_meta(str, &root, status);
 		else
-			str = read_string_before_white_quote(tmp, &root);
-		free(tmp);
+			str = read_string_before_white_quote(str, &root);
 		if (!str)
 		{
 			ft_lstclear(&root, free);
