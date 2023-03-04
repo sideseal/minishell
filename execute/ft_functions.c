@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:43:32 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/03 21:00:01 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:11:34 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_close(int fd, int process_type)
 	int	ret;
 
 	ret = 0;
+	if (fd == -2)
+		return (ret);
 	if (close(fd) == -1)
 		ret = execute_error("failed to close", process_type);
 	return (ret);

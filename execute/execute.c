@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/04 14:23:47 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:22:05 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,12 @@ int	pipeline(t_cmd *line, t_env *environ)
 		set_command_fd(cur);
 		exit(execute_command_by_type(cur, environ, CHILD));
 	}
-	// 확인해야 함! 시그널 처리도...
 	ft_close(STDIN_FILENO, CHILD);
 	status = retrieve_childs(line, pid, &status, CHILD);
 	return (child_signal(status));
 }
 
+// 확인해야 함! 시그널 처리도...
 int	execute(t_cmd *line, t_env *environ)
 {
 	pid_t	pid;
@@ -125,8 +125,8 @@ int	execute(t_cmd *line, t_env *environ)
 	signal(SIGQUIT, SIG_IGN);
 	if (line->next == NULL)
 	{
-//		signal(SIGINT, execute_signal_handler);
-//		signal(SIGQUIT, execute_signal_handler);
+		signal(SIGINT, execute_signal_handler);
+		signal(SIGQUIT, execute_signal_handler);
 		set_simple_command_fd(line, PARENT);
 		ret = execute_command_by_type(line, environ, PARENT);
 		reset_simple_command_fd(line, PARENT);
