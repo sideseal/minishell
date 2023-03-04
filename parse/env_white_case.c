@@ -65,6 +65,20 @@ void	env_white_case(t_list *temp)
 	ft_lstlast(result)->next = temp_next;
 }
 
+int	is_blank_only(char *str)
+{
+	int	index;
+
+	index = 0;
+	while (str[index])
+	{
+		if (ft_iswhite(str[index]) == 0)
+			return (0);
+		index++;
+	}
+	return (1);
+}
+
 void	env_input(t_env *environ, t_list *temp, t_list **root)
 {
 	char	*return_val;
@@ -80,6 +94,9 @@ void	env_input(t_env *environ, t_list *temp, t_list **root)
 	{
 		temp->content = ft_strdup(return_val);
 		temp->is_env = 1;
-		env_white_case(temp);
+		if (is_blank_only(temp->content) == 0)
+			env_white_case(temp);
+		else
+			temp->is_meta = 1;
 	}
 }
