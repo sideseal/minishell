@@ -21,6 +21,17 @@ void	free_parsed_data(t_cmd **line_root)
 
 	while (*line_root)
 	{
+		printf("fd_in_last: %d, fd_out_last: %d\n", (*line_root)->fd_in, (*line_root)->fd_out);
+		if ((*line_root)->fd_in > 0)
+		{
+			printf("!!!!!!!!!\n");
+			ft_close((*line_root)->fd_in, PARENT);
+		}
+		if ((*line_root)->fd_out > 0)
+		{
+			printf("!!!!!!!!!\n");
+			ft_close((*line_root)->fd_out, PARENT);
+		}
 		curr = (*line_root)->next;
 		free((*line_root)->cmd);
 		index = 0;
@@ -101,6 +112,7 @@ void	handle_child_process(t_env *environ, int *status)
 		free_parsed_data(&line_root);
 		return ;
 	}
+	close(tmp_fd);
 	t_cmd *cur = line_root;
 	while (cur)
 	{
