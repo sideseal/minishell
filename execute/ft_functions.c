@@ -17,6 +17,8 @@ int	ft_close(int fd, int process_type)
 	int	ret;
 
 	ret = 0;
+	if (fd == -2)
+		return (ret);
 	if (close(fd) == -1)
 		ret = execute_error("failed to close", process_type);
 	return (ret);

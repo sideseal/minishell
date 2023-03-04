@@ -58,18 +58,14 @@ int	*out_in_fd(t_list *pre_temp, t_list *temp)
 	while (pre_temp != temp)
 	{
 		if (pre_temp && (pre_temp->is_here_word || pre_temp->is_fd_input))
-		{
-			if (return_val[0] > 0)
-				close(return_val[0]);
 			return_val[0] = pre_temp->fd;
-		}
 		else if (pre_temp && (pre_temp->is_fd_new || pre_temp->is_fd_add))
-		{
-			if (return_val[0] > 0)
-				close(return_val[0]);
 			return_val[1] = pre_temp->fd;
-		}
 		pre_temp = pre_temp->next;
+		if (pre_temp && (pre_temp->is_here_word || pre_temp->is_fd_input))
+			return_val[0] = pre_temp->fd;
+		else if (pre_temp && (pre_temp->is_fd_new || pre_temp->is_fd_add))
+			return_val[1] = pre_temp->fd;
 	}
 	return (return_val);
 }

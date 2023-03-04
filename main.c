@@ -37,9 +37,6 @@ void	free_parsed_data(t_cmd **line_root)
 
 void	leaks_check(void)
 {
-	// test
-	// test2
-	// test 3
 	system("leaks --list -- minishell");
 }
 
@@ -103,6 +100,12 @@ void	handle_child_process(t_env *environ, int *status)
 		free(line);
 		free_parsed_data(&line_root);
 		return ;
+	}
+	t_cmd *cur = line_root;
+	while (cur)
+	{
+		printf("in: %d, out: %d\n", cur->fd_in, cur->fd_out);
+		cur = cur->next;
 	}
 	*status = execute(line_root, environ);
 	free(line);
