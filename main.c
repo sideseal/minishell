@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/04 16:33:23 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:43:39 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,13 @@ void	handle_child_process(t_env *environ, int *status)
 		free_parsed_data(&line_root);
 		return ;
 	}
-	t_cmd *cur = line_root;
-	while (cur)
-	{
-		printf("in: %d, out: %d\n", cur->fd_in, cur->fd_out);
-		cur = cur->next;
-	}
-	*status = execute(line_root, environ);
-
-//	t_cmd	*cur;
-//	cur = line_root;
-//	while (cur != NULL)
+//	t_cmd *cur = line_root;
+//	while (cur)
 //	{
-//		printf("fd_in: %d, fd_out: %d\n", cur->fd_in, cur->fd_out);
+//		printf("in: %d, out: %d\n", cur->fd_in, cur->fd_out);
 //		cur = cur->next;
 //	}
+	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(&line_root);
 }
