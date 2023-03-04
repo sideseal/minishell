@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/03 19:30:44 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:49:39 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	leaks_check(void)
 {
 	// test
 	// test2
+	// test 3
 	system("leaks --list -- minishell");
 }
 
