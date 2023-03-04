@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:43:32 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/03 21:00:01 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 21:27:59 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,4 @@ pid_t	ft_wait(int *statloc, int process_type)
 	if (ret == -1)
 		execute_error("failed to wait", process_type);
 	return (ret);
-}
-
-void	ft_waitpid(pid_t pid, int *statloc, int options, int process_type)
-{
-	if (waitpid(pid, statloc, options) == -1)
-		execute_error("failed to waitpid", process_type);
 }
