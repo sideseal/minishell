@@ -37,6 +37,7 @@ void	free_parsed_data(t_cmd **line_root)
 
 void	leaks_check(void)
 {
+	// test
 	system("leaks --list -- minishell");
 }
 
