@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/04 16:43:39 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 17:27:07 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	free_parsed_data(t_cmd **line_root)
 
 	while (*line_root)
 	{
-		printf("fd_in_last: %d, fd_out_last: %d\n", (*line_root)->fd_in, (*line_root)->fd_out);
+		//printf("fd_in_last: %d, fd_out_last: %d\n", (*line_root)->fd_in, (*line_root)->fd_out);
 		if ((*line_root)->fd_in > 0)
 		{
-			printf("!!!!!!!!!\n");
+			//printf("!!!!!!!!!\n");
 			ft_close((*line_root)->fd_in, PARENT);
 		}
 		if ((*line_root)->fd_out > 0)
 		{
-			printf("!!!!!!!!!\n");
+			//printf("!!!!!!!!!\n");
 			ft_close((*line_root)->fd_out, PARENT);
 		}
 		curr = (*line_root)->next;
@@ -112,6 +112,7 @@ void	handle_child_process(t_env *environ, int *status)
 		free_parsed_data(&line_root);
 		return ;
 	}
+	ft_close(tmp_fd, PARENT);
 //	t_cmd *cur = line_root;
 //	while (cur)
 //	{

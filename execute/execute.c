@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/04 16:22:05 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 18:01:23 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	execute_command_by_type(t_cmd *node, t_env *environ, int process_type)
 	int			status;
 	int			ret;
 
+	signal(SIGINT, execute_signal_handler);
+	signal(SIGQUIT, execute_signal_handler);
 	ret = execute_builtin(node, environ, process_type);
 	if (ret != -1)
 		return (ret);
@@ -93,8 +95,8 @@ int	pipeline(t_cmd *line, t_env *environ)
 	pid_t	pid;
 	int		status;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+//	signal(SIGINT, SIG_DFL);
+//	signal(SIGQUIT, SIG_DFL);
 	cur = line;
 	while (cur->next != NULL)
 	{
@@ -125,8 +127,6 @@ int	execute(t_cmd *line, t_env *environ)
 	signal(SIGQUIT, SIG_IGN);
 	if (line->next == NULL)
 	{
-		signal(SIGINT, execute_signal_handler);
-		signal(SIGQUIT, execute_signal_handler);
 		set_simple_command_fd(line, PARENT);
 		ret = execute_command_by_type(line, environ, PARENT);
 		reset_simple_command_fd(line, PARENT);
