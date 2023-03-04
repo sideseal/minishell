@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/03 23:12:31 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:23:47 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,14 @@ void	pipeline_child(t_cmd *node, t_env *environ)
 	ft_dup2(pfd[READ_END], STDIN_FILENO, CHILD);
 }
 
-int	retrieve_childs(t_cmd *line, pid_t pid, int *statloc, int process_type)
-{
-	t_cmd	*cur;
-	pid_t	retrived;
-	int		pid_statloc;
-
-	cur = line;
-	while (cur != NULL)
-	{
-		retrived = ft_wait(statloc, process_type);
-		if (retrived == pid)
-			pid_statloc = *statloc;
-		cur = cur->next;
-	}
-	return (pid_statloc);
-}
-
 int	pipeline(t_cmd *line, t_env *environ)
 {
 	t_cmd	*cur;
 	pid_t	pid;
 	int		status;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	cur = line;
 	while (cur->next != NULL)
 	{
@@ -121,8 +106,6 @@ int	pipeline(t_cmd *line, t_env *environ)
 		execute_error("failed to fork", CHILD);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		set_command_fd(cur);
 		exit(execute_command_by_type(cur, environ, CHILD));
 	}
@@ -138,17 +121,17 @@ int	execute(t_cmd *line, t_env *environ)
 	int		ret;
 	int		status;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (line->next == NULL)
 	{
-		signal(SIGINT, execute_signal_handler);
-		signal(SIGQUIT, execute_signal_handler);
+//		signal(SIGINT, execute_signal_handler);
+//		signal(SIGQUIT, execute_signal_handler);
 		set_simple_command_fd(line, PARENT);
 		ret = execute_command_by_type(line, environ, PARENT);
 		reset_simple_command_fd(line, PARENT);
 		return (ret);
 	}
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		execute_error("failed to fork", PARENT);
