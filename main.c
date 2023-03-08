@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/08 18:51:59 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/08 20:48:54 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	readline_loop(t_env *environ, int *status)
 	int		tmp_fd;
 
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigint_handler);
-	//signal(SIGQUIT, SIG_IGN);
+	//signal(SIGQUIT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	tmp_fd = dup(0);
 	g_is_ended = -1;
 	line = readline("minishell$ ");
@@ -109,21 +109,21 @@ void	readline_loop(t_env *environ, int *status)
 	}
 	close(tmp_fd);
 	// print parsed data
-	t_cmd *tmp = line_root;
-	while (tmp)
-	{
-		printf("------------\n");
-		printf("cmd: %s\n", tmp->cmd);
-		int i = 0;
-		while (tmp->args[i])
-		{
-			printf("args: %s\n", tmp->args[i]);
-			i++;
-		}
-		printf("fd_in: %d\nfd_out: %d\n", tmp->fd_in, tmp->fd_out);
-		printf("is_ig: %d\n", tmp->is_ignore);
-		tmp = tmp->next;
-	}
+//	t_cmd *tmp = line_root;
+//	while (tmp)
+//	{
+//		printf("------------\n");
+//		printf("cmd: %s\n", tmp->cmd);
+//		int i = 0;
+//		while (tmp->args[i])
+//		{
+//			printf("args: %s\n", tmp->args[i]);
+//			i++;
+//		}
+//		printf("fd_in: %d\nfd_out: %d\n", tmp->fd_in, tmp->fd_out);
+//		printf("is_ig: %d\n", tmp->is_ignore);
+//		tmp = tmp->next;
+//	}
 	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(&line_root);
@@ -131,8 +131,8 @@ void	readline_loop(t_env *environ, int *status)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*environ;
-	int		status;
+	t_env			*environ;
+	int				status;
 
 	if (argv[1] || argc != 1)
 	{
