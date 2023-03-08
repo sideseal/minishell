@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/08 18:13:30 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:31:15 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,21 @@ void	handle_child_process(t_env *environ, int *status)
 	}
 	close(tmp_fd);
 	// print parsed data
-//	t_cmd *tmp = line_root;
-//	while (tmp)
-//	{
-//		printf("------------\n");
-//		printf("cmd: %s\n", tmp->cmd);
-//		int i = 0;
-//		while (tmp->args[i])
-//		{
-//			printf("args: %s\n", tmp->args[i]);
-//			i++;
-//		}
-//		printf("is_ig: %d\n", tmp->is_ignore);
-//		tmp = tmp->next;
-//	}
+	t_cmd *tmp = line_root;
+	while (tmp)
+	{
+		printf("------------\n");
+		printf("cmd: %s\n", tmp->cmd);
+		int i = 0;
+		while (tmp->args[i])
+		{
+			printf("args: %s\n", tmp->args[i]);
+			i++;
+		}
+		printf("fd_in: %d\nfd_out: %d\n", tmp->fd_in, tmp->fd_out);
+		printf("is_ig: %d\n", tmp->is_ignore);
+		tmp = tmp->next;
+	}
 	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(&line_root);
