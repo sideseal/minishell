@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/08 18:31:15 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:51:59 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	see_global_rest_handle(char *line, int *tmp_fd, int *status)
 	return (0);
 }
 
-void	handle_child_process(t_env *environ, int *status)
+void	readline_loop(t_env *environ, int *status)
 {
 	char	*line;
 	t_cmd	*line_root;
@@ -136,15 +136,16 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argv[1] || argc != 1)
 	{
-		ft_putstr_fd("no arg ", 2);
+		ft_putstr_fd("Usage: ./minishell", 2);
 		exit(1);
 	}
+	ft_putstr_fd("Welcome to minishell!\n\n", 1);
 	status = 0;
 	environ = set_environ(envp);
 	while (1)
 	{
 		g_is_ended = 0;
-		handle_child_process(environ, &status);
+		readline_loop(environ, &status);
 	}
 	env_lstclear(environ);
 	return (0);
