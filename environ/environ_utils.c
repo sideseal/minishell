@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:07:16 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/23 17:28:02 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:48:29 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_env	*env_lstnew(char **envp)
 	if (new == NULL)
 		return (NULL);
 	new->key = ft_strdup(envp[0]);
-	new->val = ft_strdup(envp[1]);
+	if (ft_strncmp(new->key, "SHLVL", 6) == 0)
+		new->val = ft_itoa(ft_atoi(envp[1]) + 1);
+	else
+		new->val = ft_strdup(envp[1]);
 	new->export = 1;
 	new->next = NULL;
 	return (new);
