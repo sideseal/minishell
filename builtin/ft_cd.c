@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:49:01 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/08 19:35:29 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/09 20:36:27 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ static int	change_environ_pwd(t_env *environ)
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
+	{
+		ft_putstr_fd("minishell: cd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		perror("");
 		return (EXIT_FAILURE);
+	}
 	cur = environ;
 	while (cur != NULL)
 	{
