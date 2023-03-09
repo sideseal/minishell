@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 07:28:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/03 16:42:45 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/09 21:08:44 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*read_string_before_pipe(char *str, t_list **root, int *status)
 		return (0);
 	}
 	return_val = (char *)malloc(sizeof(char) * 2);
+	if (return_val == NULL)
+		return (0);
 	return_val[0] = '|';
 	return_val[1] = '\0';
 	ft_lstadd_back(root, ft_lstnew(return_val, 1));

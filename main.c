@@ -6,11 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/08 20:48:54 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:12:33 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
+#include <termios.h>
 
 int	g_is_ended;
 
@@ -90,10 +91,15 @@ void	readline_loop(t_env *environ, int *status)
 	char	*line;
 	t_cmd	*line_root;
 	int		tmp_fd;
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
 	signal(SIGINT, sigint_handler);
-	//signal(SIGQUIT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sigint_handler);
+	//signal(SIGQUIT, SIG_IGN);
 	tmp_fd = dup(0);
 	g_is_ended = -1;
 	line = readline("minishell$ ");
