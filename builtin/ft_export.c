@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:12:44 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/24 20:47:27 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:55:57 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,19 @@ int	ft_export(t_cmd *node, t_env *environ)
 {
 	int	i;
 	int	type;
+	int	status;
 
 	i = 1;
 	if (node->args[i] == NULL)
 		show_export(environ);
+	status = EXIT_SUCCESS;
 	while (node->args[i] != NULL)
 	{
 		type = check_export_type(node->args[i]);
 		if (!type)
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(node->args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			return (EXIT_FAILURE);
+			export_identifier_error(node->args[i]);
+			status = EXIT_FAILURE;
 		}
 		else if (type == '=')
 			export_replace(node->args[i], environ);
@@ -137,5 +137,5 @@ int	ft_export(t_cmd *node, t_env *environ)
 			export_add(node->args[i], environ);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (status);
 }

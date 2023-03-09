@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:28:31 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/08 19:34:49 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:56:09 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ int	xnor_by_status(int n1, int n2, int status)
 		return (status);
 	else
 		return (!status);
+}
+
+void	export_identifier_error(char *command)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }
