@@ -73,6 +73,7 @@ t_cmd	*ft_lstnew_cmd(char *cmd, char **args);
 t_cmd	*ft_lstlast_cmd(t_cmd *lst);
 void	ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 int		pipe_size_check(t_list *pre_temp, t_list *temp);
+void	ignore_cmd(t_list **pre_lst, t_cmd **return_val);
 t_cmd	*final_parse(t_list **pre_lst);
 // final_parse_part end
 
