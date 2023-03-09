@@ -37,6 +37,7 @@ SRC = ./main.c \
 	./parse/redi_process/del_redi_read_here.c \
 	./parse/final_parse/final_parse_lst.c \
 	./parse/final_parse/pipe_size_check.c \
+	./parse/final_parse/ignore_cmd.c \
 	./parse/final_parse/final_parse.c \
 	./error_handle/minishell_error.c \
 	./error_handle/execute_error.c \

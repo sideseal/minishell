@@ -33,7 +33,8 @@ t_list	*confirm_input(t_list *temp, int *status, t_list **merged_lst)
 	temp = temp->next;
 	while (temp && temp->is_meta && ft_iswhite(temp->content[0]))
 		temp = temp->next;
-	if (temp && temp->is_meta && !ft_iswhite(temp->content[0]) && !is_ignore_f(temp, merged_lst))
+	if (temp && temp->is_meta && !ft_iswhite(temp->content[0])
+		&& !is_ignore_f(temp, merged_lst))
 	{
 		unexpected_token_error(temp->content, status);
 		temp->is_ignore = 1;
@@ -51,13 +52,13 @@ t_list	*confirm_input(t_list *temp, int *status, t_list **merged_lst)
 	return (temp);
 }
 
-
 t_list	*confirm_new(t_list *temp, int *status, t_list **merged_lst)
 {
 	temp = temp->next;
 	while (temp && temp->is_meta && ft_iswhite(temp->content[0]))
 		temp = temp->next;
-	if (temp && temp->is_meta && !ft_iswhite(temp->content[0])  && !is_ignore_f(temp, merged_lst))
+	if (temp && temp->is_meta && !ft_iswhite(temp->content[0])
+		&& !is_ignore_f(temp, merged_lst))
 	{
 		unexpected_token_error(temp->content, status);
 		temp->is_ignore = 1;
@@ -67,12 +68,13 @@ t_list	*confirm_new(t_list *temp, int *status, t_list **merged_lst)
 		unexpected_token_newline(status);
 		return (0);
 	}
-// if (access(temp->content, W_OK) && !is_ignore_f(temp, merged_lst))
-// {
-// 	temp->is_ignore = 1;
-// 	minishell_error(temp->content, status);
-// }
-return (temp);
+	if (access(temp->content, F_OK) == 0 && !is_ignore_f(temp, merged_lst)
+		&& access(temp->content, W_OK))
+	{
+		temp->is_ignore = 1;
+		minishell_error(temp->content, status);
+	}
+	return (temp);
 }
 
 t_list	*confirm_heredoc(t_list *temp, int *status)
@@ -104,7 +106,8 @@ int	is_ignore_finder(t_list **merged_lst, int *status)
 	temp = *merged_lst;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->content, ">>", 2) == 0 || ft_strncmp(temp->content, ">", 2) == 0) && temp->is_meta)
+		if ((ft_strncmp(temp->content, ">>", 2) == 0
+				|| ft_strncmp(temp->content, ">", 2) == 0) && temp->is_meta)
 			temp = confirm_new(temp, status, merged_lst);
 		else if (ft_strncmp(temp->content, "<", 2) == 0 && temp->is_meta)
 			temp = confirm_input(temp, status, merged_lst);
@@ -114,4 +117,3 @@ int	is_ignore_finder(t_list **merged_lst, int *status)
 	}
 	return (0);
 }
-

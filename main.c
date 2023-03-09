@@ -108,22 +108,6 @@ void	readline_loop(t_env *environ, int *status)
 		return ;
 	}
 	close(tmp_fd);
-	// print parsed data
-//	t_cmd *tmp = line_root;
-//	while (tmp)
-//	{
-//		printf("------------\n");
-//		printf("cmd: %s\n", tmp->cmd);
-//		int i = 0;
-//		while (tmp->args[i])
-//		{
-//			printf("args: %s\n", tmp->args[i]);
-//			i++;
-//		}
-//		printf("fd_in: %d\nfd_out: %d\n", tmp->fd_in, tmp->fd_out);
-//		printf("is_ig: %d\n", tmp->is_ignore);
-//		tmp = tmp->next;
-//	}
 	*status = execute(line_root, environ);
 	free(line);
 	free_parsed_data(&line_root);
