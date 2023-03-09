@@ -6,7 +6,7 @@
 /*   By: gychoi <gychoi@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:13:04 by gychoi            #+#    #+#             */
-/*   Updated: 2023/02/24 20:46:31 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:34:45 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_exit(t_cmd *node, int process_type);
 
 int		is_meta_builtin(char c);
 void	free_strings(char *s1, char *s2);
+int		xnor_by_status(int n1, int n2, int status);
 
 int		check_export_type(char *cmd);
 char	*get_key(char *command);

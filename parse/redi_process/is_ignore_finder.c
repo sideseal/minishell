@@ -67,12 +67,12 @@ t_list	*confirm_new(t_list *temp, int *status, t_list **merged_lst)
 		unexpected_token_newline(status);
 		return (0);
 	}
-if (access(temp->content, W_OK) && !is_ignore_f(temp, merged_lst))
-{
-	temp->is_ignore = 1;
-	minishell_error(temp->content, status);
-}
-	return (temp);
+// if (access(temp->content, W_OK) && !is_ignore_f(temp, merged_lst))
+// {
+// 	temp->is_ignore = 1;
+// 	minishell_error(temp->content, status);
+// }
+return (temp);
 }
 
 t_list	*confirm_heredoc(t_list *temp, int *status)
