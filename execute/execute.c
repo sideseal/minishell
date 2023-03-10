@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 01:31:40 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/08 18:13:02 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/10 14:52:11 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	execute(t_cmd *line, t_env *environ)
 		signal(SIGQUIT, execute_signal_handler);
 		set_simple_command_fd(line, PARENT);
 		if (line->fd_in == -1 || line->is_ignore == 1)
-			return (1);
+			return (reset_simple_command_fd(line, PARENT));
 		ret = execute_command_by_type(line, environ, PARENT);
 		reset_simple_command_fd(line, PARENT);
 		return (ret);

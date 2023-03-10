@@ -6,12 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:03:19 by seokjyoo          #+#    #+#             */
-/*   Updated: 2023/03/09 19:12:33 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/10 14:47:30 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
-#include <termios.h>
 
 int	g_is_ended;
 
@@ -40,11 +39,6 @@ void	free_parsed_data(t_cmd **line_root)
 	}
 }
 
-void	leaks_check(void)
-{
-	system("leaks --list -- minishell");
-}
-
 void	sigint_handler(int sig_num)
 {
 	if (sig_num == SIGINT)
@@ -57,11 +51,6 @@ void	sigint_handler(int sig_num)
 		else
 			write(1, "\nminishell$ ", 12);
 		g_is_ended = 1;
-	}
-	if (sig_num == SIGQUIT)
-	{
-		atexit(leaks_check);
-		exit(1);
 	}
 }
 
@@ -91,15 +80,9 @@ void	readline_loop(t_env *environ, int *status)
 	char	*line;
 	t_cmd	*line_root;
 	int		tmp_fd;
-	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~(ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigint_handler);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	tmp_fd = dup(0);
 	g_is_ended = -1;
 	line = readline("minishell$ ");

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 20:11:24 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/04 21:09:07 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/10 14:51:47 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void	set_simple_command_fd(t_cmd *node, int process_type)
 	}
 }
 
-void	reset_simple_command_fd(t_cmd *node, int process_type)
+int	reset_simple_command_fd(t_cmd *node, int process_type)
 {
 	if (node->fd_in > -1)
 		ft_dup2(node->fd_old_in, STDIN_FILENO, process_type);
 	if (node->fd_out > -1)
 		ft_dup2(node->fd_old_out, STDOUT_FILENO, process_type);
+	return (1);
 }
 
 void	set_command_fd(t_cmd *node)

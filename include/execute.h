@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:19:23 by gychoi            #+#    #+#             */
-/*   Updated: 2023/03/04 21:28:09 by gychoi           ###   ########.fr       */
+/*   Updated: 2023/03/10 14:52:27 by gychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		child_signal(int pid_status);
 int		execute(t_cmd *commandline, t_env *environ);
 
 void	set_simple_command_fd(t_cmd *node, int process_type);
-void	reset_simple_command_fd(t_cmd *node, int process_type);
+int		reset_simple_command_fd(t_cmd *node, int process_type);
 void	set_command_fd(t_cmd *node);
 
 void	execute_signal_handler(int signum);
