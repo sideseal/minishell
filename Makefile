@@ -6,14 +6,14 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 13:03:12 by seokjyoo          #+#    #+#              #
-#    Updated: 2023/03/03 19:06:03 by gychoi           ###   ########.fr        #
+#    Updated: 2023/03/10 18:01:35 by gychoi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
 LFTDIR = ./LIBFT/
@@ -82,4 +82,4 @@ fclean: clean
 re : fclean
 	$(MAKE) all
 
-.PHONY:	all clean fclean re
+.PHONY: all clean fclean re
